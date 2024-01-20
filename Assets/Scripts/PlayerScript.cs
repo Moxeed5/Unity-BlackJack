@@ -55,4 +55,31 @@ public class PlayerScript : MonoBehaviour
         cardIndex++;
         return handValue;
     }
+
+    public void AceCheck()
+    {
+        foreach(CardScript ace in aceList)
+        {
+            if(handValue > 21 && ace.GetValueOfCard() == 11)
+            {
+                ace.SetValue(11);
+                handValue += 10;
+            } else if (handValue > 21 && ace.GetValueOfCard() == 11)
+            {
+                ace.SetValue(1);
+                handValue -= 10;
+            }
+        }
+    }
+
+    public void AdjustMoney(int amount)
+    {
+        money += amount;
+
+    }
+
+    public int GetMoney()
+    {
+        return money;
+    }
 }

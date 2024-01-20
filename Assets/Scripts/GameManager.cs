@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
         //hides dealers card at the start of the deal
         //commenting out the below fixed deal button not working
         dealerScoreText.gameObject.SetActive(false);
+        //hideCard.SetActive(true);
         GameObject.Find("Deck").GetComponent<Deck>().Shuffle();
         playerScript.StartHand();
         dealerScript.StartHand();
@@ -59,10 +60,10 @@ public class GameManager : MonoBehaviour
         dealBtn.gameObject.SetActive(false);
         hitBtn.gameObject.SetActive(true);
         standBtn.gameObject.SetActive(true);
-        TextMeshProUGUI buttonText = standBtn.GetComponentInChildren<TextMeshProUGUI>();
-        buttonText.text = "Stand";
+        standBtnText.text = "Stand";
         pot = 40;
         betsText.text = pot.ToString();
+        //playerSCript.AdjustMoney(-20);
 
     }
 

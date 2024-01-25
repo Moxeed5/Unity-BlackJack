@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,8 +27,9 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI dealerScoreText;
     public TextMeshProUGUI betsText;
     public TextMeshProUGUI cashText;
-    //public Text mainText;
+    public TextMeshProUGUI mainText;
     public TextMeshProUGUI standBtnText;
+
 
     //Card hiding dealers 2nd Card
     public GameObject hideCard;
@@ -89,6 +91,60 @@ public class GameManager : MonoBehaviour
         while (dealerScript.handValue < 16 && dealerScript.cardIndex < 10)
         {
             dealerScript.GetCard();
+        }
+    }
+
+    //check for winner and loser
+
+    void RoundOver()
+    {
+        bool playerBust = playerScript.handValue > 21;
+        bool dealerBust = dealerScript.handValue > 21;
+        bool player21 = playerScript.handValue == 21;
+        bool dealer21 = dealerScript.handValue == 21;
+
+        if (standClicks < 2 && !playerBust && !dealerBust && !player21 && !dealer21) return;
+
+        bool roundOver = true;
+
+        if (!playerBust && dealerBust)
+        {
+            mainText.text = "All bust: Bets returned";
+            playerScript.AdjustMoney(pot / 2);
+        }
+
+        //check to see who won
+        else if (playerBust || !dealerBust && dealerScript.handValue > playerScript.handValue)
+        {
+            mainText.text = "Dealer wins!";
+        }
+        else if (dealerBust || playerScript.handValue > dealerScript.handValue)
+        {
+            mainText.text = "Player wins!";
+            playerScript.AdjustMoney(pot);
+        }
+        else if (playerScript.handValue == dealerScript.handValue)
+        {
+            mainText.text = "Push: Bets returned";
+            playerScript.AdjustMoney(pot / 2);
+        }
+        else
+        {
+            roundOver = false;
+        }
+        //set ui for next hand. Update all buttons.
+        if(roundOver)
+        {
+            hitBtn.gameObject.SetActive(false);
+            standBtn.gameObject.SetActive(false);
+            dealBtn.gameObject.SetActive(false);
+            mainText.gameObject.SetActive(false);
+            dealBtn.gameObject.SetActive(false);
+            dealerScoreText.gameObject.SetActive(true);
+            hideCard.GetComponent<Renderer>().enabled = false;
+            cashText.text = playerScript.GetMoney().ToString();
+            standClicks = 0;
+
         }
     }
 

@@ -3249,6 +3249,7 @@ MonoBehaviour:
   dealerScoreText: {fileID: 820365028}
   betsText: {fileID: 2134073548}
   cashText: {fileID: 256394098}
+  mainText: {fileID: 2140254436}
   standBtnText: {fileID: 1943856418}
   hideCard: {fileID: 1500995843}
 --- !u!4 &1674780845

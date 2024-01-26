@@ -48,6 +48,9 @@ public class GameManager : MonoBehaviour
 
     private void DealClicked()
     {
+        //Reset round 
+        playerScript.ResetHand();
+        dealerScript.ResetHand();
         //hides dealers card at the start of the deal
         mainText.gameObject.SetActive(false);
         //commenting out the below fixed deal button not working
@@ -58,7 +61,7 @@ public class GameManager : MonoBehaviour
         dealerScript.StartHand();
         //insert the sum of player's hand and dealer's hand into 
         scoreText.text = "Hand: " + playerScript.handValue.ToString();
-        dealerScoreText.text = "Hand: " + playerScript.handValue.ToString();
+        dealerScoreText.text = "Hand: " + dealerScript.handValue.ToString();
         //Hides dealer card when active
         hideCard.GetComponent<Renderer>().enabled = true;
         //adjust buttons visibility 
@@ -94,9 +97,13 @@ public class GameManager : MonoBehaviour
 
     private void HitDealer()
     {
+        dealerScoreText.gameObject.SetActive(true);
+        hideCard.GetComponent<Renderer>().enabled = false;
+
         while (dealerScript.handValue < 16 && dealerScript.cardIndex < 10)
         {
             dealerScript.GetCard();
+            
             //dealerscore
             dealerScoreText.text = dealerScript.handValue.ToString();
             if (dealerScript.handValue > 20) RoundOver();
@@ -156,6 +163,17 @@ public class GameManager : MonoBehaviour
             standClicks = 0;
 
         }
+    }
+
+    void BetClicked()
+    {
+        //change to TextMeshProGUI if causing issies
+        Text newBet = betBtn.GetComponentInChildren(typeof(TextMeshProUGUI)) as Text;
+        int intBet = int.Parse(newBet.text.ToString().Remove(0,1));
+        playerScript.AdjustMoney(-intBet);
+        cashText.text += playerScript.GetMoney().ToString();
+        pot += (intBet * 2);
+        betsText.text = pot.ToString();
     }
 
 }

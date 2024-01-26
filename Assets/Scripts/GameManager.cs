@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     private void DealClicked()
     {
         //hides dealers card at the start of the deal
+        mainText.gameObject.SetActive(false);
         //commenting out the below fixed deal button not working
         dealerScoreText.gameObject.SetActive(false);
         //hideCard.SetActive(true);
@@ -58,6 +59,8 @@ public class GameManager : MonoBehaviour
         //insert the sum of player's hand and dealer's hand into 
         scoreText.text = "Hand: " + playerScript.handValue.ToString();
         dealerScoreText.text = "Hand: " + playerScript.handValue.ToString();
+        //Hides dealer card when active
+        hideCard.GetComponent<Renderer>().enabled = true;
         //adjust buttons visibility 
         dealBtn.gameObject.SetActive(false);
         hitBtn.gameObject.SetActive(true);
@@ -65,22 +68,25 @@ public class GameManager : MonoBehaviour
         standBtnText.text = "Stand";
         pot = 40;
         betsText.text = pot.ToString();
-        //playerSCript.AdjustMoney(-20);
+        playerScript.AdjustMoney(-20);
+        cashText.text = playerScript.GetMoney().ToString();
 
     }
 
     private void HitClicked()
     {
-        if(playerScript.GetCard() <= 10)
+        if(playerScript.cardIndex <= 10)
         {
             playerScript.GetCard();
+            scoreText.text = "Hand: " + playerScript.handValue.ToString();
+            if (playerScript.handValue > 20) RoundOver();
         }
     }
 
     private void StandClicked()
     {
         standClicks++;
-        if (standClicks > 1) Debug.Log("end function");
+        if (standClicks > 1) RoundOver();
         HitDealer();
         standBtnText.text = "Call";
 
@@ -91,6 +97,10 @@ public class GameManager : MonoBehaviour
         while (dealerScript.handValue < 16 && dealerScript.cardIndex < 10)
         {
             dealerScript.GetCard();
+            //dealerscore
+            dealerScoreText.text = dealerScript.handValue.ToString();
+            if (dealerScript.handValue > 20) RoundOver();
+
         }
     }
 
@@ -137,9 +147,9 @@ public class GameManager : MonoBehaviour
         {
             hitBtn.gameObject.SetActive(false);
             standBtn.gameObject.SetActive(false);
-            dealBtn.gameObject.SetActive(false);
-            mainText.gameObject.SetActive(false);
-            dealBtn.gameObject.SetActive(false);
+            dealBtn.gameObject.SetActive(true);
+            mainText.gameObject.SetActive(true);
+            
             dealerScoreText.gameObject.SetActive(true);
             hideCard.GetComponent<Renderer>().enabled = false;
             cashText.text = playerScript.GetMoney().ToString();

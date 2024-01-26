@@ -24,7 +24,7 @@ public class CardScript : MonoBehaviour
         return GetComponent<SpriteRenderer>().sprite.name; 
     }
 
-    public void Reset()
+    public void ResetCard()
     {
         Sprite back = GameObject.Find("DeckController").GetComponent<Deck>().GetCardBack();
         gameObject.GetComponent<SpriteRenderer>().sprite = back;

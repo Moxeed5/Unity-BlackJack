@@ -3242,7 +3242,7 @@ MonoBehaviour:
   dealBtn: {fileID: 856033453}
   hitBtn: {fileID: 2045079140}
   standBtn: {fileID: 899508282}
-  betBtn: {fileID: 0}
+  betBtn: {fileID: 1078758678}
   playerScript: {fileID: 2066851860}
   dealerScript: {fileID: 1691539915}
   scoreText: {fileID: 980724653}

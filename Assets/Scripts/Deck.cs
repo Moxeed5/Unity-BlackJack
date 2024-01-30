@@ -30,7 +30,7 @@ public class Deck : MonoBehaviour
             }
             cardValues[i] = num++;
         }
-        currentIndex = 1;
+        
         
     }
 
@@ -50,6 +50,7 @@ public class Deck : MonoBehaviour
             cardValues[i] = cardValues[j];
             cardValues[j] = tempValue;
         }
+        currentIndex = 1;
     }
 
 

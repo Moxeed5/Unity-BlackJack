@@ -43,7 +43,11 @@ public class GameManager : MonoBehaviour
         dealBtn.onClick.AddListener(() => DealClicked());
         hitBtn.onClick.AddListener(() => HitClicked());
         standBtn.onClick.AddListener(() => StandClicked());
-        
+        betBtn.onClick.AddListener(() => BetClicked());
+
+        hitBtn.gameObject.SetActive(false);
+        standBtn.gameObject.SetActive(false);
+
     }
 
     private void DealClicked()
@@ -165,13 +169,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void BetClicked()
+    /*void BetClicked()
     {
         //change to TextMeshProGUI if causing issies
-        Text newBet = betBtn.GetComponentInChildren(typeof(TextMeshProUGUI)) as Text;
+        TextMeshProUGUI newBet = betBtn.GetComponentInChildren(typeof(TextMeshProUGUI)) as TextMeshProUGUI;
         int intBet = int.Parse(newBet.text.ToString().Remove(0,1));
         playerScript.AdjustMoney(-intBet);
         cashText.text += playerScript.GetMoney().ToString();
+        pot += (intBet * 2);
+        betsText.text = pot.ToString();
+    }*/
+    void BetClicked()
+    {
+        int intBet = 20; // Directly use the bet value since it's always $20
+        playerScript.AdjustMoney(-intBet);
+        cashText.text = playerScript.GetMoney().ToString();
         pot += (intBet * 2);
         betsText.text = pot.ToString();
     }
